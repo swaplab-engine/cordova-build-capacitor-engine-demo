@@ -1,1 +1,62 @@
 
+# File name: .github/workflows/cordova-build-capacitor-android.yml
+name: Cordova Build Android Service
+
+on:
+  workflow_dispatch:
+    inputs:
+      appBaseUrl:
+        required: true
+      buildId:
+        required: true
+      buildToken:
+        required: true
+      ref:
+        description: 'The image tag to use for the build engine'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Request a short-term access token from the server
+      # GHCR single-use token
+      - name: Request short-lived GHCR token
+        id: get_token
+        run: |
+          token=$(curl -s -f -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ github.event.inputs.buildToken }}" \
+            -d '{
+                  "buildId": "${{ github.event.inputs.buildId }}"
+                }' \
+            ${{ github.event.inputs.appBaseUrl }}/api/request-ghcr-token | jq -r .ghcrToken)
+          
+          if [ -z "$token" ]; then
+            echo "::error::Failed to retrieve a valid token from the server."
+            exit 1
+          fi
+
+          echo "token=$token" >> $GITHUB_OUTPUT
+
+      # Step 2: Log in to GHCR using the newly obtained token
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ steps.get_token.outputs.token }}
+
+      # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:ref
+      # Once the container has been pulled, the build will run automatically.
+      - name: Run Build Android Engine
+        run: |
+          echo "${{ inputs.buildToken }}" | docker run --rm -i \
+            -e INPUT_APPBASEURL=${{ inputs.appBaseUrl }} \
+            -e INPUT_BUILDID=${{ inputs.buildId }} \
+            -e GITHUB_SERVER_URL=${{ github.server_url }} \
+            -e GITHUB_REPOSITORY=${{ github.repository }} \
+            -e GITHUB_RUN_ID=${{ github.run_id }} \
+            ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:${{ github.event.inputs.ref }}
+            
