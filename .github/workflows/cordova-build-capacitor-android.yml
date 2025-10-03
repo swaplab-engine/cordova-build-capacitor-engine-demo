@@ -1,5 +1,5 @@
 # File name: .github/workflows/cordova-build-capacitor-android.yml
-# Versi yang sudah dioptimalkan dengan Gradle Caching
+# Versi yang dioptimalkan dengan Cache Gradle DAN NPM
 
 name: Cordova Build Android Service
 
@@ -48,18 +48,25 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ steps.get_token.outputs.token }}
 
-      # LANGKAH BARU: Menyiapkan cache untuk Gradle
-      # Ini akan memulihkan cache dari run sebelumnya dan menyimpannya setelah selesai.
+      # Menyiapkan cache untuk Gradle
       - name: Cache Gradle packages
         uses: actions/cache@v4
         with:
-          # Path di runner (host) tempat kita akan menyimpan cache
           path: ~/.gradle/caches
-          # Kunci unik untuk cache. Jika dependensi berubah, kunci akan berbeda.
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          # Kunci cadangan jika tidak ada cache yang cocok persis
+          key: ${{ runner.os }}-gradle-cache-v1 # Menggunakan kunci statis sederhana
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-cache-
+
+      # LANGKAH BARU: Menyiapkan cache untuk NPM
+      - name: Cache NPM packages
+        uses: actions/cache@v4
+        with:
+          # Path di runner (host) tempat kita menyimpan cache npm
+          path: ~/.npm
+          # Kunci ini akan sama untuk semua build, efektif membuat cache global untuk semua proyek
+          key: ${{ runner.os }}-npm-cache-v1
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
 
       # Step 3: Pull the Docker Container Image and run the build
       - name: Run Build Android Engine
@@ -70,5 +77,7 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
+            # Volume mount untuk cache Gradle
             -v ~/.gradle/caches:/github/workspace/.gradle/caches \
+            -v ~/.npm:/github/workspace/.cache/npm \
             ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:${{ github.event.inputs.ref }}
