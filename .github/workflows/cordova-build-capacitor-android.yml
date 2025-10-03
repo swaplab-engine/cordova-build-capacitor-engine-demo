@@ -77,7 +77,6 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
-            # Volume mount untuk cache Gradle
             -v ~/.gradle/caches:/github/workspace/.gradle/caches \
             -v ~/.npm:/github/workspace/.cache/npm \
             ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:${{ github.event.inputs.ref }}
