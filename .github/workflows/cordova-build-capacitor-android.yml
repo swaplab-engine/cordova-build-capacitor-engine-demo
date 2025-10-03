@@ -1,5 +1,6 @@
-
 # File name: .github/workflows/cordova-build-capacitor-android.yml
+# Versi yang sudah dioptimalkan dengan Gradle Caching
+
 name: Cordova Build Android Service
 
 on:
@@ -18,10 +19,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       # Step 1: Request a short-term access token from the server
-      # GHCR single-use token
       - name: Request short-lived GHCR token
         id: get_token
         run: |
@@ -32,7 +32,7 @@ jobs:
                   "buildId": "${{ github.event.inputs.buildId }}"
                 }' \
             ${{ github.event.inputs.appBaseUrl }}/api/request-ghcr-token | jq -r .ghcrToken)
-          
+
           if [ -z "$token" ]; then
             echo "::error::Failed to retrieve a valid token from the server."
             exit 1
@@ -48,8 +48,20 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ steps.get_token.outputs.token }}
 
-      # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:ref
-      # Once the container has been pulled, the build will run automatically.
+      # LANGKAH BARU: Menyiapkan cache untuk Gradle
+      # Ini akan memulihkan cache dari run sebelumnya dan menyimpannya setelah selesai.
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          # Path di runner (host) tempat kita akan menyimpan cache
+          path: ~/.gradle/caches
+          # Kunci unik untuk cache. Jika dependensi berubah, kunci akan berbeda.
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          # Kunci cadangan jika tidak ada cache yang cocok persis
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Step 3: Pull the Docker Container Image and run the build
       - name: Run Build Android Engine
         run: |
           echo "${{ inputs.buildToken }}" | docker run --rm -i \
@@ -58,5 +70,5 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
+            -v ~/.gradle/caches:/github/workspace/.gradle/caches \
             ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:${{ github.event.inputs.ref }}
-            
