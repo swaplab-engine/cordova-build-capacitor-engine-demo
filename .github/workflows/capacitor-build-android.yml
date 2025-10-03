@@ -58,5 +58,5 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
-            ghcr.io/swaplab-engine/cordova-build-engine:${{ github.event.inputs.ref }}
+            ghcr.io/swaplab-engine/cordova-build-capacitor-engine-android:${{ github.event.inputs.ref }}
             
