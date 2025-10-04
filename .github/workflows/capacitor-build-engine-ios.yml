@@ -1,5 +1,5 @@
 
-# File name: .github/workflows/cordova-build-capacitor-ios.yml
+# File name: .github/workflows/capacitor-build-engine-ios.yml
 name: Cordova Build IOS Service
 
 on:
@@ -48,7 +48,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ steps.get_token.outputs.token }}
 
-      # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/cordova-build-capacitor-engine-ios:ref
+      # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-engine-ios:ref
       # Once the container has been pulled, the build will run automatically.
       - name: Run Build IOS Engine
         run: |
@@ -58,5 +58,5 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
-            ghcr.io/swaplab-engine/cordova-build-capacitor-engine-ios:${{ github.event.inputs.ref }}
+            ghcr.io/swaplab-engine/capacitor-build-engine-ios:${{ github.event.inputs.ref }}
             
