@@ -1,5 +1,5 @@
 
-# File name: .github/workflows/capacitor-build-android.yml
+# File name: .github/workflows/capacitor-build-android-engine.yml
 name: Capacitor Build Android Service
 
 on:
@@ -48,7 +48,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ steps.get_token.outputs.token }}
 
-      # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-engine-android:ref
+      # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-android-engine:ref
       # Once the container has been pulled, the build will run automatically.
       - name: Run Build Android Engine
         run: |
@@ -58,5 +58,5 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
-            ghcr.io/swaplab-engine/capacitor-build-engine-android:${{ github.event.inputs.ref }}
+            ghcr.io/swaplab-engine/capacitor-build-android-engine:${{ github.event.inputs.ref }}
             
