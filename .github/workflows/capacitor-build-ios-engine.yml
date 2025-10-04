@@ -1,6 +1,6 @@
 
 # File name: .github/workflows/capacitor-build-ios-engine.yml
-name: Cordova Build IOS Service
+name: Capacitor Build IOS Service
 
 on:
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
 
       # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-ios-engine:ref
       # Once the container has been pulled, the build will run automatically.
-      - name: Run Build IOS Engine
+      - name: Capacitor Run Build IOS Engine
         run: |
           echo "${{ inputs.buildToken }}" | docker run --rm -i \
             -e INPUT_APPBASEURL=${{ inputs.appBaseUrl }} \
