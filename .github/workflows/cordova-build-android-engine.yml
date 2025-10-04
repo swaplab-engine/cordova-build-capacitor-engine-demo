@@ -50,7 +50,7 @@ jobs:
 
       # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-android-engine:ref
       # Once the container has been pulled, the build will run automatically.
-      - name: Run Build Android Engine
+      - name: Cordova Run Build Android Engine
         run: |
           echo "${{ inputs.buildToken }}" | docker run --rm -i \
             -e INPUT_APPBASEURL=${{ inputs.appBaseUrl }} \
