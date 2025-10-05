@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget id="com.test.cordovs" version="1.0.0.0" android-versionCode="1000000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-	<name>testCordovProject</name>
-	<description>testCordovProject</description>
-	<author email="" href="">testCordovProject</author>
+<widget id="com.sonfgf" version="1.0.0.0" android-versionCode="1000000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>Fruit Slicing Example AdmobComunity</name>
+	<description>Fruit Slicing Example</description>
+	<author email="" href="">Fruit Slicing Example</author>
 	<content src="index.html" />
 	<allow-intent href="http://*/*" />
 	<allow-intent href="https://*/*" />
@@ -14,13 +14,20 @@
 	<icon src="www/icons/icon-64.png" width="64" height="64" density="mdpi" />
 	<icon src="www/icons/icon-32.png" width="32" height="32" />
 	<icon src="www/icons/icon-16.png" width="16" height="16" />
-	<preference name="orientation" value="portrait" />
+	<plugin name="community-admob-plus-cordova" spec="1.32.8">
+		<variable name="APP_ID_ANDROID" value="ca-app-pub-3940256099942544~3347511713" />
+	</plugin>
+	<plugin name="cordova-plugin-consent" spec="2.2.0" />
+	<plugin name="cordova-plugin-device" spec="2.0.3" />
+	<plugin name="construct-mobile-export2" spec="1.0.5" />
+	<preference name="orientation" value="landscape" />
 	<preference name="fullscreen" value="false" />
 	<preference name="DisallowOverscroll" value="true" />
 	<preference name="LoadUrlTimeoutValue" value="120000" />
 	<access origin="*" />
 	<preference name="AutoHideSplashScreen" value="false" />
 	<preference name="ShowSplashScreenSpinner" value="false" />
+	<preference name="DoCocoaPodsUpdate" value="true" />
 	<preference name="InspectableWebview" value="true" />
 	<engine name="android" spec="14.0.1" />
 	<platform name="android">
