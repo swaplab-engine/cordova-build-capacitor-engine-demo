@@ -61,4 +61,4 @@ jobs:
             -e INPUT_PROJECT_PATH=${{ github.event.inputs.projectPath }} \
             -v ${{ github.workspace }}:/github/workspace \
             -v ~/.npm:/github/workspace/.cache/npm \
-            ghcr.io/swaplab-engine/cordova-export-xcode-plus-engine:${{ github.event.inputs.ref }}
+            ghcr.io/swaplab-engine/cordova-build-ios-privacy-engine:${{ github.event.inputs.ref }}
