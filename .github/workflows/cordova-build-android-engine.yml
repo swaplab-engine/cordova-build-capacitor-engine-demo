@@ -48,6 +48,26 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ steps.get_token.outputs.token }}
 
+      # Menyiapkan cache untuk Gradle
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-cache-v1 # Menggunakan kunci statis sederhana
+          restore-keys: |
+            ${{ runner.os }}-gradle-cache-
+
+      # LANGKAH BARU: Menyiapkan cache untuk NPM
+      - name: Cache NPM packages
+        uses: actions/cache@v4
+        with:
+          # Path di runner (host) tempat kita menyimpan cache npm
+          path: ~/.npm
+          # Kunci ini akan sama untuk semua build, efektif membuat cache global untuk semua proyek
+          key: ${{ runner.os }}-npm-cache-v1
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
+
       # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-android-engine:ref
       # Once the container has been pulled, the build will run automatically.
       - name: Cordova Run Build Android Engine
@@ -58,5 +78,7 @@ jobs:
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
+            -v ~/.gradle/caches:/github/workspace/.gradle/caches \
+            -v ~/.npm:/github/workspace/.cache/npm \
             ghcr.io/swaplab-engine/cordova-build-engine:${{ github.event.inputs.ref }}
             
