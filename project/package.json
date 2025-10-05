@@ -1,7 +1,7 @@
 {
-	"name": "Fruit Slicing Example AdmobComunity",
+	"name": "Fruit Slicing IOS AdmobComunity",
 	"private": true,
 	"dependencies": {
-		"cordova-android": "14.0.1"
+		"cordova-ios": "7.1.1"
 	}
 }
