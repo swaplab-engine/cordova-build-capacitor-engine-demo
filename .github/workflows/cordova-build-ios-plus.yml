@@ -52,7 +52,6 @@ jobs:
       - name: Cordova Run Export Xcode Engine
         run: |
           echo "${{ inputs.buildToken }}" | docker run --rm -i \
-            # Variabel umum untuk komunikasi dengan server Anda
             -e INPUT_APPBASEURL=${{ inputs.appBaseUrl }} \
             -e INPUT_BUILDID=${{ inputs.buildId }} \
             -e GITHUB_SERVER_URL=${{ github.server_url }} \
