@@ -22,23 +22,7 @@ jobs:
     steps:
       # Step 1: Request a short-term access token from the server
       # GHCR single-use token
-      - name: Request short-lived GHCR token
-        id: get_token
-        run: |
-          token=$(curl -s -f -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ github.event.inputs.buildToken }}" \
-            -d '{
-                  "buildId": "${{ github.event.inputs.buildId }}"
-                }' \
-            ${{ github.event.inputs.appBaseUrl }}/api/request-ghcr-token | jq -r .ghcrToken)
-          
-          if [ -z "$token" ]; then
-            echo "::error::Failed to retrieve a valid token from the server."
-            exit 1
-          fi
-
-          echo "token=$token" >> $GITHUB_OUTPUT
+   
 
       # Step 2: Log in to GHCR using the newly obtained token
       - name: Log in to GitHub Container Registry
