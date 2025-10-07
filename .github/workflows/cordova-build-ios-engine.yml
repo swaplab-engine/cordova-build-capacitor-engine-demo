@@ -30,7 +30,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ steps.get_token.outputs.token }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 3: Pull the public Docker Container Image ghcr.io/swaplab-engine/capacitor-build-ios-engine:ref
       # Once the container has been pulled, the build will run automatically.
