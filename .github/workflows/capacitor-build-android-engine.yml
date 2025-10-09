@@ -12,10 +12,10 @@ on:
       buildToken:
         required: true
       # projectPath dan keystorePath tetap di sini, sesuai arsitektur "Plus"
-      projectPath:
-        description: 'The relative path to your project directory inside the repository.'
-        required: false
-        default: 'project'
+     # projectPath:
+     #   description: 'The relative path to your project directory inside the repository.'
+    #    required: false
+    #    default: 'project'
       keystorePath:
         description: 'The relative path to your .jks keystore file.'
         required: false
@@ -70,10 +70,10 @@ jobs:
             -e INPUT_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
             -e INPUT_KEY_ALIAS=${{ secrets.KEY_ALIAS }} \
             -e INPUT_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }} \
-            -e INPUT_PROJECT_PATH=${{ github.event.inputs.projectPath }} \
             -e INPUT_KEYSTORE_PATH=${{ github.event.inputs.keystorePath }} \
             -v ${{ github.workspace }}:/github/workspace \
             -v ~/.gradle/caches:/github/workspace/.gradle/caches \
             -v ~/.npm:/github/workspace/.cache/npm \
             ghcr.io/swaplab-engine/capacitor-build-android-engine:${{ github.event.inputs.ref }}
+        # -e INPUT_PROJECT_PATH=${{ github.event.inputs.projectPath }} \
             
