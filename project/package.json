@@ -1,7 +1,0 @@
-{
-	"name": "testCordovProject",
-	"private": true,
-	"dependencies": {
-		"cordova-android": "14.0.1"
-	}
-}
