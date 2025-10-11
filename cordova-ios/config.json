@@ -1,0 +1,120 @@
+{
+	"id": "com.sonfgf",
+	"version": "1.0.0.0",
+	"versionCode": "1000000",
+	"name": "Fruit Slicing IOS AdmobComunity",
+	"description": "Fruit Slicing Example",
+	"whitelist": [
+		"http://*/*",
+		"https://*/*"
+	],
+	"author": "Fruit Slicing Example",
+	"email": "",
+	"website": "",
+	"orientation": "landscape",
+	"fullscreen": false,
+	"permissionTypes": [],
+	"icons": [
+		{
+			"src": "www/icons/icon-512.png",
+			"width": 512,
+			"height": 512,
+			"density": "xxxhdpi"
+		},
+		{
+			"src": "www/icons/icon-256.png",
+			"width": 256,
+			"height": 256,
+			"density": null
+		},
+		{
+			"src": "www/icons/icon-128.png",
+			"width": 128,
+			"height": 128,
+			"density": "xhdpi"
+		},
+		{
+			"src": "www/icons/icon-64.png",
+			"width": 64,
+			"height": 64,
+			"density": "mdpi"
+		},
+		{
+			"src": "www/icons/icon-32.png",
+			"width": 32,
+			"height": 32,
+			"density": null
+		},
+		{
+			"src": "www/icons/icon-16.png",
+			"width": 16,
+			"height": 16,
+			"density": null
+		}
+	],
+	"adaptiveIcons": [],
+	"preferences": [
+		{
+			"name": "DoCocoaPodsUpdate",
+			"value": "true",
+			"platform": "all"
+		},
+		{
+			"name": "InspectableWebview",
+			"value": "true",
+			"platform": "all"
+		}
+	],
+	"plugins": [
+		{
+			"id": "community-admob-plus-cordova",
+			"version": "1.32.8",
+			"variables": [
+				[
+					"APP_ID_IOS",
+					"ca-app-pub-3940256099942544~1458002511"
+				]
+			]
+		},
+		{
+			"id": "cordova-plugin-consent",
+			"version": "2.2.0",
+			"variables": []
+		},
+		{
+			"id": "cordova-plugin-device",
+			"version": "2.0.3",
+			"variables": []
+		},
+		{
+			"id": "cordova-plugin-idfa",
+			"version": "2.0.0",
+			"variables": []
+		},
+		{
+			"id": "cordova-plugin-nativestorage",
+			"version": "2.3.1",
+			"variables": []
+		},
+		{
+			"id": "construct-mobile-export2",
+			"version": "1.0.5",
+			"variables": []
+		}
+	],
+	"resourceFiles": [],
+	"android": null,
+	"splash": "www/icons/default@2x~universal~anyany.png",
+	"splashBackground": "#ffffff",
+	"autoHideSplashScreen": false,
+	"iosScheme": "app",
+	"androidScheme": "https",
+	"enableAndroidX": false,
+	"enableGooglePlayServices": false,
+	"ios": {
+		"target": "15.0",
+		"engine": "7.1.1",
+		"plugins": []
+	},
+	"useragent": null
+}
