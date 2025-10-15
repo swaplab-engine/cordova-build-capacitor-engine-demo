@@ -21,8 +21,8 @@ on:
 
 jobs:
   build:
-   # runs-on: self-hosted
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+   # runs-on: ubuntu-latest
     permissions:
       contents: write
     
@@ -41,17 +41,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # (Langkah cache tidak perlu diubah)
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-cache-v3
+     # - name: Cache Gradle packages
+      #  uses: actions/cache@v4
+     #   with:
+      #    path: ~/.gradle/caches
+     #     key: ${{ runner.os }}-gradle-cache-v3
       
-      - name: Cache NPM packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-cache-v3
+     # - name: Cache NPM packages
+     #   uses: actions/cache@v4
+     #   with:
+     #     path: ~/.npm
+      #    key: ${{ runner.os }}-npm-cache-v3
 
       - name: Cordova Run Build Android Engine
         run: |
@@ -67,8 +67,6 @@ jobs:
             -e INPUT_KEY_ALIAS=${{ secrets.KEY_ALIAS }} \
             -e INPUT_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }} \
             -v ${{ github.workspace }}:/github/workspace \
-            -v ~/.gradle/caches:/github/workspace/.gradle/caches \
-            -v ~/.npm:/github/workspace/.cache/npm \
             ghcr.io/swaplab-engine/${{ github.event.inputs.imageName }}:${{ github.event.inputs.ref }}
-
+           
             
