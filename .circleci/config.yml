@@ -18,12 +18,7 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-            # Kunci ini akan mencoba mencari cache yang persis sama
-            - v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-            # Jika tidak ada, gunakan cache gradle terbaru
-            - v1-gradle-wrapper-
+
 
       # 2. Logika ECR Anda yang sudah benar
       - run:
@@ -61,17 +56,7 @@ jobs:
               -e GITHUB_RUN_ID=$CIRCLE_WORKFLOW_ID \
               $REGISTRY_URI/swaplab/<< pipeline.parameters.imageName >>:<< pipeline.parameters.ref >>
 
-      - save_cache:
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-          paths:
-            - ~/.gradle/caches
-            - ~/.gradle/wrapper
       
-      
-      - save_cache:
-          key: v1-docker-image-cache-main
-          paths:
-            - /tmp/caches
 
 workflows:
   build_app:
