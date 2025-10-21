@@ -43,11 +43,14 @@ jobs:
             # Pull image dinamis
             docker pull --quiet $REGISTRY_URI/<< pipeline.parameters.imageName >>:<< pipeline.parameters.ref >>
             
-            # Jalankan image dinamis
-            docker run --rm \
+            # === PERBAIKAN: Kirim token via STDIN, bukan ENV ===
+            # 1. 'echo' buildToken
+            # 2. Pipa '|' ke docker run
+            # 3. Tambahkan flag '-i' (interaktif/stdin)
+            # 4. Hapus '-e INPUT_BUILDTOKEN=...'
+            echo "<< pipeline.parameters.buildToken >>" | docker run --rm -i \
               -e INPUT_APPBASEURL="<< pipeline.parameters.appBaseUrl >>" \
               -e INPUT_BUILDID="<< pipeline.parameters.buildId >>" \
-              -e INPUT_BUILDTOKEN="<< pipeline.parameters.buildToken >>" \
               -e GITHUB_SERVER_URL="https://github.com" \
               -e GITHUB_REPOSITORY="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME" \
               -e GITHUB_RUN_ID=$CIRCLE_WORKFLOW_ID \
