@@ -1,5 +1,5 @@
 # File: .circleci/config.yml
-# (Arsitektur Terpusat dengan ECR Dinamis)
+# PERBAIKAN: Menghapus komentar yang memutus perintah 'docker run'
 version: 2.1
 
 # 1. Menerima parameter dinamis dari server.js
@@ -17,8 +17,6 @@ jobs:
     
     steps:
       - checkout
-
-
 
       # 2. Logika ECR Anda yang sudah benar
       - run:
@@ -42,7 +40,7 @@ jobs:
           name: Run Secure Build Engine
           command: |
             source $BASH_ENV
-            # Pull image dinamis (TANPA "swaplab/")
+            # Pull image dinamis
             docker pull --quiet $REGISTRY_URI/<< pipeline.parameters.imageName >>:<< pipeline.parameters.ref >>
             
             # Jalankan image dinamis
@@ -53,10 +51,7 @@ jobs:
               -e GITHUB_SERVER_URL="https://github.com" \
               -e GITHUB_REPOSITORY="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME" \
               -e GITHUB_RUN_ID=$CIRCLE_WORKFLOW_ID \
-              # Jalankan image dinamis (TANPA "swaplab/")
               $REGISTRY_URI/<< pipeline.parameters.imageName >>:<< pipeline.parameters.ref >>
-
-      
 
 workflows:
   build_app:
